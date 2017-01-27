@@ -1,0 +1,19 @@
+<h2>Inventory public plugin</h2>
+
+<div class="tabControl" (click)="onWishesClick()" [ngClass]="{'current': wishesTabVisible}">{{ 'Wishes'|translation }}</div>
+<div class="tabControl" (click)="onOrdersClick()" [ngClass]="{'current': ordersTabVisible}">{{ 'Orders'|translation }}</div>
+
+<wishes *ngIf="wishesTabVisible"></wishes>
+<orders *ngIf="ordersTabVisible"></orders>
+
+<style>
+    .tabControl {
+        cursor: pointer;
+    }
+    .tabControl.current {
+        font-weight: bold;
+    }
+</style>
+
+<busy-popup></busy-popup>
+<details-popup></details-popup>

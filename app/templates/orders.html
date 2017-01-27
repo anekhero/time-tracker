@@ -1,0 +1,30 @@
+<div *ngFor="let item of orderList.items">
+    <div *ngIf="item.visible">
+        <div>{{ 'Order #'|translation }} {{ item.original.id }}</div>
+        <div>{{ 'Order status'|translation }} {{ item.original.order_status_formatted }}</div>
+        <div>{{ 'Invoice status'|translation }} {{ item.original.invoice_status_formatted }}</div>
+        <table>
+            <tr>
+                <th>{{ 'Title'|translation }}</th>
+                <th>{{ 'Price'|translation }} ({{ config.currencyShortName }})</th>
+                <th>{{ 'Quantity'|translation }}</th>
+                <th>{{ 'Cost'|translation }} ({{ config.currencyShortName }})</th>
+            </tr>
+            <tr *ngFor="let orderItem of item.original._orderItems">
+                <td>{{ orderItem.article_name }}</td>
+                <td>{{ orderItem.price_formatted }}</td>
+                <td>{{ orderItem.quantity }}</td>
+                <td>{{ orderItem.getCost() }}</td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>{{ 'Total'|translation }}</td>
+                <td>{{ item.original.getTotalCost() }}</td>
+            </tr>
+        </table>
+        <a *ngIf="item.original.download_invoice_url" target="_blank" [attr.href]="item.original.download_invoice_url">{{ 'Download Invoice'|translation }}</a>
+        <a *ngIf="item.original.download_receipt_url" target="_blank" [attr.href]="item.original.download_receipt_url">{{ 'Download Receipt'|translation }}</a>
+    </div>
+</div>
+<div *ngIf="orderList.items.length === 0">There is no order at the moment.</div>
+
