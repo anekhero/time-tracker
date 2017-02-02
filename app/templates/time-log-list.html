@@ -1,0 +1,18 @@
+<div>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>Title</th>
+            <th>Start</th>
+        </tr>
+        <tbody *ngFor="let item of timeLogList.items">
+        <tr *ngIf="item.visible">
+            <td>{{ item.original.id }}</td>
+            <td>{{ item.original.summary }}</td>
+            <td>{{ item.original.dateStart }}</td>
+            <td>{{ item.original.dateEnd }}</td>
+            <td>{{ item.original.isClosed ? '' : 'Current' }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

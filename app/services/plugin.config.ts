@@ -1,12 +1,9 @@
 import {Injectable} from "@angular/core";
 import {Filter} from "../models/filter-list-of"
 import {Sorting} from "../models/sort-list-of"
-import {InventoryArticle} from "../models/inventory-article"
 
 export interface PluginOptions {
     mockAJAX: any
-
-    articles: InventoryArticle[]
 
     filters: Filter[]
     sortings: Sorting[]
@@ -23,7 +20,6 @@ export interface PluginOptions {
 export class PluginConfig {
     mockAJAX: any;
 
-    articles: InventoryArticle[] = [];
 
     filters: Filter[] = [];
     sortings: Sorting[] = [];

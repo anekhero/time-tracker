@@ -1,10 +1,12 @@
-<h2>Inventory public plugin</h2>
-
-<div class="tabControl" (click)="onWishesClick()" [ngClass]="{'current': wishesTabVisible}">{{ 'Wishes'|translation }}</div>
-<div class="tabControl" (click)="onOrdersClick()" [ngClass]="{'current': ordersTabVisible}">{{ 'Orders'|translation }}</div>
-
-<wishes *ngIf="wishesTabVisible"></wishes>
-<orders *ngIf="ordersTabVisible"></orders>
+<h1>Track time</h1>
+<input list="logAutocompleteList" type="text" [(ngModel)]="newTimeLogItemSummary">
+<datalist id="logAutocompleteList">
+    <option *ngFor="let item of newTimeLogItemSummaryAutocomplete" value="{{ item }}">
+</datalist>
+<button (click)="onAddTimeLogClick()">Add</button>
+<br>
+<button (click)="onCloseTimeLogClick()">Close</button>
+<time-log-list></time-log-list>
 
 <style>
     .tabControl {
@@ -16,4 +18,3 @@
 </style>
 
 <busy-popup></busy-popup>
-<details-popup></details-popup>

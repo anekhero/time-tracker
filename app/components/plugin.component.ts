@@ -5,42 +5,43 @@ import {FilterListOf, Filter} from "../models/filter-list-of";
 import {SortListOf} from '../models/sort-list-of';
 import {It7ErrorService} from "../services/it7-error.service";
 import {DataManagerService} from "../services/data-manager.service";
+import {TimeLogService} from "../services/time-log.service";
+import {TimeLogItem} from "../models/time-log-item";
 
 @Component({
     selector: 'inventory-public-plugin',
     templateUrl: PluginConfig.buildTemplateUrl('templates/plugin.html')
 })
 export class PluginComponent {
-
-    private wishesTabVisible: boolean = false;
-    private ordersTabVisible: boolean = false;
+    public newTimeLogItemSummary: string = '';
+    public newTimeLogItemSummaryAutocomplete: string[] = [];
+    public logs: TimeLogItem[] = [];
 
     constructor(
         config: PluginConfig,
         private err: It7ErrorService,
-        private dm: DataManagerService
+        private dm: DataManagerService,
+        private timeLogService: TimeLogService
     ) {
-        dm.updateData();
-        this.showWishesTab();
+        this.timeLogService.onUpdate.subscribe((l => this.onTimeLogUpdate(l)));
     }
 
-    // -- Template events
-
-    public onWishesClick() {
-        this.showWishesTab();
+    ngOnInit() {
+        this.dm.initData();
     }
 
-    public onOrdersClick() {
-        this.showOrdersTab();
+    public onTimeLogUpdate(list: TimeLogItem[]) {
+        this.newTimeLogItemSummaryAutocomplete = list.map((i: TimeLogItem) => i.summary);
     }
 
-    private showWishesTab() {
-        this.wishesTabVisible = true;
-        this.ordersTabVisible = false;
+    // Call from template
+    public onAddTimeLogClick() {
+        this.dm.addTimeLogItem({summary: this.newTimeLogItemSummary});
+        this.newTimeLogItemSummary = '';
     }
 
-    private showOrdersTab() {
-        this.wishesTabVisible = false;
-        this.ordersTabVisible = true;
+    // Call from template
+    public onCloseTimeLogClick() {
+        this.dm.closeOpenedTimeLogItem();
     }
 }
