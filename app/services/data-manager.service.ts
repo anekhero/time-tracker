@@ -46,7 +46,7 @@ export class DataManagerService {
 
     addTimeLogItem(data: any) {
         let date = new Date();
-        let dateString = date.toString();
+        let dateString = date.toJSON();
         this._closeLastTimeLogItem(dateString);
         this.timeLogService.list.push(new TimeLogItem({
             id: Math.random().toString(36).substr(2, 9),
@@ -60,7 +60,7 @@ export class DataManagerService {
     }
 
     closeOpenedTimeLogItem(){
-        this._closeLastTimeLogItem((new Date()).toString());
+        this._closeLastTimeLogItem((new Date()).toJSON());
     }
 
     // -- Private

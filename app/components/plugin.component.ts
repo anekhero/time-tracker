@@ -31,7 +31,7 @@ export class PluginComponent {
     }
 
     public onTimeLogUpdate(list: TimeLogItem[]) {
-        this.newTimeLogItemSummaryAutocomplete = list.map((i: TimeLogItem) => i.summary);
+        this.newTimeLogItemSummaryAutocomplete = list.map((i: TimeLogItem) => i.summary).filter((v, i, a) => a.indexOf(v) === i);
     }
 
     // Call from template
