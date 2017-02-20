@@ -1,4 +1,6 @@
 <h1>Track time</h1>
+<button (click)="onClearTimeLogClick()">Clear</button>
+<br>
 <input list="logAutocompleteList" type="text" [(ngModel)]="newTimeLogItemSummary">
 <datalist id="logAutocompleteList">
     <option *ngFor="let item of newTimeLogItemSummaryAutocomplete" value="{{ item }}">
@@ -6,7 +8,9 @@
 <button (click)="onAddTimeLogClick()">Add</button>
 <br>
 <button (click)="onCloseTimeLogClick()">Close</button>
+
 <time-log-list></time-log-list>
+<task-list></task-list>
 
 <style>
     .tabControl {

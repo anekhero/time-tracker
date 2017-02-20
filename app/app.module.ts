@@ -11,6 +11,9 @@ import {DataManagerService} from "./services/data-manager.service";
 import {BusyPopupComponent} from "./components/busy-popup.component";
 import {TimeLogService} from "./services/time-log.service";
 import {TimeLogListComponent} from "./components/time-log-list.component";
+import {HelperService} from "./services/helper.service";
+import {TaskListComponent} from "./components/task-list.component";
+import {TaskService} from "./services/task.service";
 
 
 @NgModule({
@@ -22,7 +25,8 @@ import {TimeLogListComponent} from "./components/time-log-list.component";
     declarations: [
         PluginComponent,
         BusyPopupComponent,
-        TimeLogListComponent
+        TimeLogListComponent,
+        TaskListComponent
     ],
     bootstrap: [PluginComponent],
     providers: [
@@ -30,7 +34,9 @@ import {TimeLogListComponent} from "./components/time-log-list.component";
         DataManagerService,
         It7ErrorService,
         It7AjaxService,
-        TimeLogService
+        TimeLogService,
+        TaskService,
+        HelperService
     ]
 })
 export class AppModule {

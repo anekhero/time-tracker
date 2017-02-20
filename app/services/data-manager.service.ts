@@ -13,6 +13,7 @@ import {TimeLogItem} from "../models/time-log-item";
 export class DataManagerService {
     public wishes_total_formatted: string = '';
     private popup: BusyPopup;
+    private storage:Storage;
 
     constructor(
         private config: PluginConfig,
@@ -26,6 +27,7 @@ export class DataManagerService {
 
         // Create MyAgenda from sessions
         //this.myAgenda.updateFromSessions(this.agendaSessions.sessions);
+        this.storage = localStorage;
     }
 
 
@@ -41,7 +43,9 @@ export class DataManagerService {
         //             return res;
         //         }
         //     )
-        this.checkAndUpdateList({logs:[]});
+        let logs = this.storage.getItem('logs');
+        logs || (logs = "[]");
+        this.checkAndUpdateList({logs: JSON.parse(logs)});
     }
 
     addTimeLogItem(data: any) {
@@ -55,15 +59,30 @@ export class DataManagerService {
             isClosed: false,
             sortKey: date.getTime()
         } as any));
+        this.saveLogs();
 
         this.timeLogService.fireUpdate();
     }
 
+    saveTimeLog() {
+        this.saveLogs();
+    }
+
     closeOpenedTimeLogItem(){
         this._closeLastTimeLogItem((new Date()).toJSON());
+        this.saveLogs();
+    }
+
+    clearTimeLog(){
+        this.timeLogService.update([]);
+        this.saveLogs();
     }
 
     // -- Private
+
+    private saveLogs() {
+        this.storage.setItem('logs', JSON.stringify(this.timeLogService.list));
+    }
 
     private _closeLastTimeLogItem(date: string) {
         this.timeLogService.list.forEach(i => {

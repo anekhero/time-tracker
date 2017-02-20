@@ -1,0 +1,54 @@
+<div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Duration</th>
+            <th>Logged duration</th>
+            <th>Not logged duration</th>
+            <th>Logs</th>
+            <th>Change to</th>
+        </tr>
+        <tbody *ngFor="let item of taskList.items">
+        <tr *ngIf="item.visible" class="{{ item.original.isClosed ? '' : 'current' }}">
+            <td>{{ item.original.name }}</td>
+            <td style="text-align: right">{{ helper.formatDuration(item.original.duration) }}</td>
+            <td style="text-align: right">{{ helper.formatDuration(item.original.durationLogged) }}</td>
+            <td style="text-align: right">{{ helper.formatDuration(item.original.durationNotLogged) }}</td>
+            <td style="text-align: right">{{ item.original.timeLogItems.length }}</td>
+            <td style="text-align: right">
+                <div *ngIf="item.original.isClosed" (click)="onCreatItemFromTaskClick(item.original)"
+                     class="changeToButton"></div>
+                <div *ngIf="!item.original.isClosed" class="currentIcon"></div>
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <td colspan="2" style="text-align: right">{{ helper.formatDuration(totalDuration) }}</td>
+            <td>{{ totalLogs }}</td>
+        </tr>
+    </table>
+</div>
+<style>
+    .current > td {
+        font-weight: bold;
+        color: #2f6a9b;
+    }
+    .currentIcon {
+        width: 17px;
+        height: 17px;
+        border: #80c0e5 2px solid;
+        border-radius: 10px;
+        background-color: #039be5;
+    }
+    .changeToButton {
+        width: 17px;
+        height: 17px;
+        border: #d3eaf9 2px solid;
+        border-radius: 10px;
+        background-color: #e1e9f7;
+        cursor: pointer;
+    }
+    .changeToButton:hover {
+        background-color: #039be5;
+    }
+</style>

@@ -1,22 +1,37 @@
 <div>
     <table>
         <tr>
-            <th>id</th>
             <th>Title</th>
-            <th>Start</th>
-            <th>End</th>
+            <th>Start - End</th>
             <th>Duration</th>
-            <th>Current</th>
+            <th>Logged</th>
         </tr>
         <tbody *ngFor="let item of timeLogList.items">
-        <tr *ngIf="item.visible">
-            <td>{{ item.original.id }}</td>
-            <td>{{ item.original.summary }}</td>
-            <td>{{ item.original.dateStart }}</td>
-            <td>{{ item.original.dateEnd }}</td>
-            <td>{{ item.original.duration }}</td>
-            <td>{{ item.original.isClosed ? '' : 'Current' }}</td>
+        <tr *ngIf="item.visible" class="{{ item.original.isClosed ? '' : 'current' }}">
+            <td (click)="onChangeItemSummaryClick(item.original)">{{ item.original.summary }}</td>
+            <td>{{ helper.formatTime(item.original.dateStart) }} - {{ helper.formatTime(item.original.dateEnd) }}</td>
+            <td style="text-align: right">
+                <span *ngIf="item.original.isClosed">{{ helper.formatDuration(item.original.duration) }}</span>
+                <span *ngIf="!item.original.isClosed">{{ helper.formatDuration(item.original._unclosedDuration) }}</span>
+            </td>
+            <td (click)="changeLoggedFlag(item.original)"><div
+                    class="loggedMarker {{ item.original.isLogged ? 'logged' : '' }}"></div></td>
         </tr>
         </tbody>
     </table>
 </div>
+<style>
+    .current > td {
+        font-weight: bold;
+        color: #627b95;
+    }
+    .loggedMarker {
+        width: 20px;
+        height: 20px;
+        background-color: #e0e0e0;
+        cursor: pointer;
+    }
+    .loggedMarker.logged {
+        background-color: #4b7aaa;
+    }
+</style>

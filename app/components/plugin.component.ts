@@ -7,6 +7,7 @@ import {It7ErrorService} from "../services/it7-error.service";
 import {DataManagerService} from "../services/data-manager.service";
 import {TimeLogService} from "../services/time-log.service";
 import {TimeLogItem} from "../models/time-log-item";
+import {TaskService} from "../services/task.service";
 
 @Component({
     selector: 'inventory-public-plugin',
@@ -43,5 +44,10 @@ export class PluginComponent {
     // Call from template
     public onCloseTimeLogClick() {
         this.dm.closeOpenedTimeLogItem();
+    }
+
+    // Call from template
+    public onClearTimeLogClick() {
+        this.dm.clearTimeLog();
     }
 }

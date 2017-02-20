@@ -115,7 +115,7 @@ app.post('/changeWish', function(req, res) {
 app.use(express.static('./'));
 
 // Start the server
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, function () {
     console.log('App listening on port ' + PORT);
     console.log('Press Ctrl+C to quit.');

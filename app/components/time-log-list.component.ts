@@ -7,6 +7,7 @@ import {DataManagerService} from "../services/data-manager.service";
 import {PopupService} from "../services/popup.service";
 import {TimeLogService} from "../services/time-log.service";
 import {TimeLogItem} from "../models/time-log-item";
+import {HelperService} from "../services/helper.service";
 
 @Component({
     selector: 'time-log-list',
@@ -15,13 +16,40 @@ import {TimeLogItem} from "../models/time-log-item";
 export class TimeLogListComponent {
     private timeLogList: ListOf;
 
-    constructor(private timeLogService: TimeLogService) {
+    constructor(private timeLogService: TimeLogService,
+                private dm: DataManagerService,
+                private helper: HelperService) {
         this.timeLogList = new ListOf();
         this.timeLogService.onUpdate.subscribe(d => this.onTimeLogUpdate(d));
+        this.helper.tick.subscribe(() => this.updateUnclosedDuration())
     }
 
     ngOnInit() {
         this.onTimeLogUpdate(this.timeLogService.list);
+    }
+
+    // Call from template
+    public onChangeItemSummaryClick(item: TimeLogItem) {
+        let newSummary = window.prompt('Change summary', item.summary);
+        if('string' === typeof newSummary && newSummary) {
+            item.summary = newSummary;
+            this.dm.saveTimeLog();
+            //this.timeLogService.fireUpdate();
+        }
+    }
+
+    // Call from template
+    public changeLoggedFlag(item: TimeLogItem) {
+        item.isLogged = !item.isLogged;
+        this.dm.saveTimeLog();
+    }
+
+    private updateUnclosedDuration() {
+        let unclosed = this.timeLogService.list.find(i => !i.isClosed);
+        if(unclosed) {
+            unclosed._unclosedDuration = (new Date()).getTime() - (new Date(unclosed.dateStart)).getTime();
+            this.timeLogService.fireUpdate();
+        }
     }
 
     private onTimeLogUpdate(list: TimeLogItem[]) {
