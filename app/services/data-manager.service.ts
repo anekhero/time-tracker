@@ -82,6 +82,7 @@ export class DataManagerService {
 
     private saveLogs() {
         this.storage.setItem('logs', JSON.stringify(this.timeLogService.list));
+        this.timeLogService.fireUpdate();
     }
 
     private _closeLastTimeLogItem(date: string) {
