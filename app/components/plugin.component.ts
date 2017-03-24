@@ -37,6 +37,7 @@ export class PluginComponent {
 
     // Call from template
     public onAddTimeLogClick() {
+        this.newTimeLogItemSummary || (this.newTimeLogItemSummary = 'unknown');
         this.dm.addTimeLogItem({summary: this.newTimeLogItemSummary});
         this.newTimeLogItemSummary = '';
     }

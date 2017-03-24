@@ -14,6 +14,7 @@ import {TimeLogListComponent} from "./components/time-log-list.component";
 import {HelperService} from "./services/helper.service";
 import {TaskListComponent} from "./components/task-list.component";
 import {TaskService} from "./services/task.service";
+import {EditPopupComponent} from "./components/edit-popup.component";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {TaskService} from "./services/task.service";
     declarations: [
         PluginComponent,
         BusyPopupComponent,
+        EditPopupComponent,
         TimeLogListComponent,
         TaskListComponent
     ],

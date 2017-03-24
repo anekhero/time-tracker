@@ -8,6 +8,8 @@ import {PopupService} from "../services/popup.service";
 import {TimeLogService} from "../services/time-log.service";
 import {TimeLogItem} from "../models/time-log-item";
 import {HelperService} from "../services/helper.service";
+import {BusyPopup} from "./busy-popup.component";
+import {EditPopup} from "./edit-popup.component";
 
 @Component({
     selector: 'time-log-list',
@@ -18,7 +20,9 @@ export class TimeLogListComponent {
 
     constructor(private timeLogService: TimeLogService,
                 private dm: DataManagerService,
-                private helper: HelperService) {
+                private helper: HelperService,
+                private popupService: PopupService
+    ) {
         this.timeLogList = new ListOf();
         this.timeLogService.onUpdate.subscribe(d => this.onTimeLogUpdate(d));
         this.helper.tick.subscribe(() => this.updateUnclosedDuration())
@@ -30,11 +34,11 @@ export class TimeLogListComponent {
 
     // Call from template
     public onChangeItemSummaryClick(item: TimeLogItem) {
+        //this.popupService.showPopup(new EditPopup());
         let newSummary = window.prompt('Change summary', item.summary);
         if('string' === typeof newSummary && newSummary) {
             item.summary = newSummary;
             this.dm.saveTimeLog();
-            //this.timeLogService.fireUpdate();
         }
     }
 
